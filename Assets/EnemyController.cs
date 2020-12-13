@@ -38,13 +38,6 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    void move()
-    {
-        transform.LookAt(Player.transform);
-        // enemy moves forward
-        transform.position += transform.forward * Speed * Time.deltaTime;
-    }
-
     void OnTriggerEnter(Collider other)
     {
         if (other.transform == Player) {
@@ -54,7 +47,7 @@ public class EnemyController : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.transform == Player) {
+        if (other.transform == Player.transform) {
 
             PlayerSighted = true;
             
@@ -62,9 +55,16 @@ public class EnemyController : MonoBehaviour
     }
     void OnTriggerExit(Collider other)
     {
-        if (other.transform == Player) {
+        if (other.transform == Player.transform) {
             PlayerSighted = false;
         }
+    }
+    
+    void move()
+    {
+        transform.LookAt(Player.transform);
+        // enemy moves forward
+        transform.position += transform.forward * Speed * Time.deltaTime;
     }
 
 }

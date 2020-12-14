@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    public AnimationsController Anim;
     [Header("Enemy variables")]
     public bool PlayerSighted;
     public bool EnemyBite;
@@ -11,7 +12,6 @@ public class EnemyController : MonoBehaviour
     public float Speed;
     public int MinDis;
     public int MaxDis;
-
 
     // Start is called before the first frame update
     void Start()
@@ -29,13 +29,14 @@ public class EnemyController : MonoBehaviour
     void PlayerFound()
     {
         if (Vector3.Distance(transform.position, Player.transform.position) >= MinDis) {
-            move();
+            transform.LookAt(Player.transform);
+            // enemy moves forward
+            transform.position += transform.forward * Speed * Time.deltaTime;
+
             if (Vector3.Distance(transform.position, Player.transform.position) <= MaxDis) {
-                EnemyBite = true;
+                Anim.Attack();
             }
         }
-
-
     }
 
     void OnTriggerEnter(Collider other)
@@ -59,12 +60,5 @@ public class EnemyController : MonoBehaviour
             PlayerSighted = false;
         }
     }
-    
-    void move()
-    {
-        transform.LookAt(Player.transform);
-        // enemy moves forward
-        transform.position += transform.forward * Speed * Time.deltaTime;
-    }
-
 }
+

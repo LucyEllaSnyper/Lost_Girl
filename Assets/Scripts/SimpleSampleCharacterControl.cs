@@ -14,6 +14,10 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         /// </summary>
         Direct
     }
+    public int maxHealth = 100;
+    public int currentHealth;
+
+    public Healthbar healthbar;
 
     [SerializeField] private float m_moveSpeed = 2;
     [SerializeField] private float m_turnSpeed = 200;
@@ -110,12 +114,24 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         if (m_collisions.Count == 0) { m_isGrounded = false; }
     }
 
-    private void Update()
+    void Start()
+    {
+        currentHealth = maxHealth;
+        healthbar.SetMaxHealth(maxHealth);
+    }
+
+    void Update()
     {
         if (!m_jumpInput && Input.GetKey(KeyCode.Space))
         {
             m_jumpInput = true;
+        
         }
+        // test if it removes any hp
+        if (Input.GetKeyDown(KeyCode.C)) {
+            TakeDamage(20);
+        }
+
     }
 
     private void FixedUpdate()
@@ -192,4 +208,15 @@ public class SimpleSampleCharacterControl : MonoBehaviour
             m_animator.SetTrigger("Jump");
         }
     }
+
+    void TakeDamage(int damage) {
+
+        currentHealth -= damage;
+        healthbar.SetHealth(currentHealth);
+    }
+
+    public void SavePlayer() {
+        SaveSystem.SavePlayer(this);
+    }
+
 }

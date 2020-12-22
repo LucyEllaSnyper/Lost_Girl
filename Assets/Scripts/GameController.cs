@@ -17,4 +17,22 @@ public class GameController : MonoBehaviour
         Debug.Log("QUIT");
         Application.Quit();
     }
+
+    public void LoadGame()
+    {
+
+        //current loads players position
+        playerdata data = SaveSystem.Loadplayer();
+
+        SimpleSampleCharacterControl play = new SimpleSampleCharacterControl();
+        play.currentHealth = data.health;
+
+        Vector3 position;
+        position.x = data.position[0];
+        position.y = data.position[1];
+        position.z = data.position[2];
+        transform.position = position;
+    }
+
+
 }

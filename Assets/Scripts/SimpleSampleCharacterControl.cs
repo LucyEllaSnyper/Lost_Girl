@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SimpleSampleCharacterControl : MonoBehaviour
 {
@@ -14,10 +15,15 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         /// </summary>
         Direct
     }
+    //health bar attributes
     public int maxHealth = 100;
     public int currentHealth;
-
     public Healthbar healthbar;
+    public int damage;
+
+    //Scoring system attributes & doesnt work
+    private int Score;
+    public Text ScoreText;
 
     [SerializeField] private float m_moveSpeed = 2;
     [SerializeField] private float m_turnSpeed = 200;
@@ -60,7 +66,11 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         {
             if(collision.collider.tag == "PickUp")
             {
-                collision.gameObject.SetActive(false);
+                Destroy(collision.gameObject);
+                //Score += 1;
+                //SetCountText();
+                
+                
             }
             if (Vector3.Dot(contactPoints[i].normal, Vector3.up) > 0.5f)
             {
@@ -118,6 +128,8 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     {
         currentHealth = maxHealth;
         healthbar.SetMaxHealth(maxHealth);
+        //Score = 0;
+        //SetCountText();
     }
 
     void Update()
@@ -130,6 +142,9 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         // test if it removes any hp
         if (Input.GetKeyDown(KeyCode.C)) {
             TakeDamage(20);
+        }
+        if (Input.GetKeyDown(KeyCode.H)) {
+            HealPlayer(20);
         }
 
     }
@@ -209,14 +224,26 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         }
     }
 
-    void TakeDamage(int damage) {
-
+    //damage player
+    public void TakeDamage(int damage) {
         currentHealth -= damage;
+        healthbar.SetHealth(currentHealth);
+    }
+
+    //heal player
+    public void HealPlayer(int Heal) {
+        currentHealth += Heal;
         healthbar.SetHealth(currentHealth);
     }
 
     public void SavePlayer() {
         SaveSystem.SavePlayer(this);
     }
+
+    /*
+    void SetCountText() {
+        ScoreText.text = Score.ToString();
+    }
+    */
 
 }

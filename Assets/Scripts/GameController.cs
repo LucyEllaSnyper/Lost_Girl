@@ -13,7 +13,6 @@ public class GameController : MonoBehaviour
 
     public void ExitGame()
     {
-
         Debug.Log("QUIT");
         Application.Quit();
     }

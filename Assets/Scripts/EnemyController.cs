@@ -6,17 +6,24 @@ public class EnemyController : MonoBehaviour
 {
     public AnimationsController Anim;
     [Header("Enemy variables")]
-    public bool PlayerSighted;
+    
     public bool EnemyBite;
-    public GameObject Player;
+
+    private Transform Player;
+
     public float Speed;
     public int MinDis;
     public int MaxDis;
+    public bool PlayerSighted;
 
+    private int damage = 20;
     // Start is called before the first frame update
-    void Start()
+
+
+    void Awake()
     {
         PlayerSighted = false;
+        Player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     // Update is called once per frame
@@ -26,26 +33,16 @@ public class EnemyController : MonoBehaviour
             PlayerFound();
     }
 
-    void PlayerFound()
-    {
-        if (Vector3.Distance(transform.position, Player.transform.position) >= MinDis) {
-            transform.LookAt(Player.transform);
-            // enemy moves forward
-            transform.position += transform.forward * Speed * Time.deltaTime;
-
-            if (Vector3.Distance(transform.position, Player.transform.position) <= MaxDis) {
-                Anim.Attack();
-            }
-        }
-    }
+   
 
     void OnTriggerEnter(Collider other)
     {
         if (other.transform == Player) {
-            GetComponent<AudioSource>().Play();
+            //GetComponent<AudioSource>().Play();
+            //PlayerSighted = true;
         }
     }
-
+    
     void OnTriggerStay(Collider other)
     {
         if (other.transform == Player.transform) {
@@ -58,6 +55,23 @@ public class EnemyController : MonoBehaviour
     {
         if (other.transform == Player.transform) {
             PlayerSighted = false;
+        }
+    }
+
+    void PlayerFound()
+    {
+        if (Vector3.Distance(transform.position, Player.transform.position) >= MinDis) {
+
+            transform.LookAt(Player.transform);
+            
+            // enemy moves forward
+            transform.position += transform.forward * Speed * Time.deltaTime;
+
+            if (Vector3.Distance(transform.position, Player.transform.position) <= MaxDis) {
+                SimpleSampleCharacterControl characterControl = new SimpleSampleCharacterControl();
+                characterControl.TakeDamage(damage);
+                Anim.Attack();
+            }
         }
     }
 }

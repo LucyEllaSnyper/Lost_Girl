@@ -14,7 +14,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 12
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!135 &1555388999
 SphereCollider:
@@ -41,12 +41,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0482bc5073e21144ca7210cb21419ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerSighted: 0
+  Anim: {fileID: 0}
   EnemyBite: 0
-  Player: {fileID: 0}
   Speed: 5
-  MinDis: 3
-  MaxDis: 2
+  MinDis: 2
+  MaxDis: 1
+  PlayerSighted: 0
 --- !u!195 &1555389000
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -93,7 +93,12 @@ PrefabInstance:
     - target: {fileID: 7978624207812556279, guid: 7a1e02b4e3e3cde4da6a58f6c596f9b7,
         type: 3}
       propertyPath: m_Name
-      value: SpiderEnemy
+      value: SpiderEnemy Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 7978624207812556279, guid: 7a1e02b4e3e3cde4da6a58f6c596f9b7,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 7978624207812061655, guid: 7a1e02b4e3e3cde4da6a58f6c596f9b7,
         type: 3}
